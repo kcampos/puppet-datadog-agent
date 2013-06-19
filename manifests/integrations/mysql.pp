@@ -32,12 +32,17 @@ class datadog::integrations::mysql(
   $galera_cluster = '1'
 ) inherits datadog::params {
 
+  package { $mysql_int_package :
+    ensure => installed,
+  }
+
   file { "${conf_dir}/mysql.yaml":
     ensure  => file,
     owner   => $dd_user,
     group   => $dd_group,
     mode    => 0644,
     content => template('datadog/mysql.yaml.erb'),
+    require => Package[$mysql_int_package],
     notify  => Service[$service_name]
   }
 }
