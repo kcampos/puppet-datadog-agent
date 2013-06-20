@@ -1,26 +1,28 @@
-# Class: datadog
+# Class: datadog::integrations::mysql
 #
-# This class contains the agent installation mechanism for the Datadog module
+# This class will install the necessary configuration for the mysql integration
 #
 # Parameters:
-#   $api_key:
-#       Your DataDog API Key. Please replace with your key value
-#   $puppet_run_reports
-#       Will send results from your puppet agent runs back to the datadog service
-#   $puppetmaster_user
-#       Will chown the api key used by the report processor to this user.
-#
-# Actions:
-#
-# Requires:
+#   $host:
+#       The host mysql is running on
+#   $password
+#       The mysql password for the datadog user
+#   $user
+#       The mysql user for the datadog user
+#   $tags
+#       Optional array of tags
+#   $replication
+#       replication option
+#   $galera_cluster
+#       galera cluster option
 #
 # Sample Usage:
 #
-# include datadog
-#
-# or
-#
-# class{'datadog': api_key => 'your key'}
+#  class { 'datadog::integrations::mysql' :
+#    host     => 'localhost',
+#    password => 'some_pass',
+#    user     => 'datadog'
+#  }
 #
 #
 class datadog::integrations::mysql(
