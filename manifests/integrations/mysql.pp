@@ -31,7 +31,7 @@ class datadog::integrations::mysql(
   $user = 'datadog',
   $tags = [],
   $replication = '0',
-  $galera_cluster = '1'
+  $galera_cluster = '0'
 ) inherits datadog::params {
 
   package { $mysql_int_package :
