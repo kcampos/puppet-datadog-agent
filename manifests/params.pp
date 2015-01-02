@@ -20,6 +20,7 @@ class datadog_agent::params {
   $dd_group     = 'root'
   $package_name = 'datadog-agent'
   $service_name = 'datadog-agent'
+  $integrations = hiera_hash('datadog_integrations', {})
 
   case $::operatingsystem {
     'Ubuntu','Debian' : {
