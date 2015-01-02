@@ -13,10 +13,10 @@
 class datadog_agent::redhat {
 
     yumrepo {'datadog':
-      enabled   => 1,
-      gpgcheck  => 0,
-      descr     => 'Datadog, Inc.',
-      baseurl   => "http://yum.datadoghq.com/rpm/${::architecture}/",
+      enabled  => 1,
+      gpgcheck => 0,
+      descr    => 'Datadog, Inc.',
+      baseurl  => "http://yum.datadoghq.com/rpm/${::architecture}/",
     }
 
     package { 'datadog-agent':
@@ -24,12 +24,12 @@ class datadog_agent::redhat {
       require => Yumrepo['datadog'],
     }
 
-    service { "datadog-agent":
+    service { 'datadog-agent':
       ensure    => $::datadog_agent::service_ensure,
       enable    => $::datadog_agent::service_enable,
       hasstatus => false,
       pattern   => 'dd-agent',
-      require   => Package["datadog-agent"],
+      require   => Package['datadog-agent'],
     }
 
 }
