@@ -16,4 +16,20 @@
 # - name: All
 #   search_string: ['All']
 
-<%= require 'yaml'; {'init_config'=>nil, 'instances'=>@processes}.to_yaml %>
+---
+init_config:
+instances:
+<% @processes.sort_by{|hsh| hsh['name']}.each do |process| -%>
+  - name: <%= process['name'] %>
+<%   process.reject{|k,v| k == 'name'}.keys.sort.each do |opt| 
+       if process[opt].class == Hash
+-%>
+    <%= opt -%>: 
+<%       process[opt].keys.sort.each do |hash_opt| -%>
+      <%= hash_opt -%>: <%= process[opt][hash_opt] %>
+<%       end -%>
+<%     else -%>
+    <%= opt -%>: <%= process[opt] %>
+<%     end -%>
+<%   end -%>
+<% end -%>
