@@ -52,40 +52,35 @@
 # Sample Usage:
 #
 # class { 'datadog_agent::integrations::http_check':
-#   url     => 'http://www.google.com/',
-# }
-#
-# class { 'datadog_agent::integrations::http_check':
-#   url     => 'http://localhost/',
-#   headers => ['Host: stan.borbat.com', 'DNT: true'],
-#   tags    => ['production', 'wordpress'],
-# }
-#
-# class { 'datadog_agent::integrations::http_check':
-#   url                   => 'http://localhost:9001/',
-#   timeout               => 5,
-#   threshold             => 1,
-#   window                => 1,
-#   include_content       => true,
-#   collect_response_time => true,
-#   contact               => 'pagerduty',
-#   tags                  => 'production',
+#   http_checks => [ 
+#     {
+#       name                  => 'check1',
+#       url                   => 'http://localhost:9001/',
+#       timeout               => 5,
+#       threshold             => 1,
+#       window                => 1,
+#       include_content       => true,
+#       collect_response_time => true,
+#       contact               => 'pagerduty',
+#       tags                  => 'production',
+#     },
+#     {
+#       name                  => 'check2',
+#       url                   => 'http://localhost:9002/',
+#       timeout               => 5,
+#       threshold             => 1,
+#       window                => 1,
+#       include_content       => true,
+#       collect_response_time => true,
+#       contact               => 'pagerduty',
+#       tags                  => 'production',
+#     }
+#   ]
 # }
 #
 #
 class datadog_agent::integrations::http_check (
-  $url       = undef,
-  $username  = undef,
-  $password  = undef,
-  $timeout   = 1,
-  $threshold = undef,
-  $window    = undef,
-  $include_content = false,
-  $collect_response_time = true,
-  $disable_ssl_validation = false,
-  $headers   = [],
-  $tags      = [],
-  $contact   = [],
+  $http_checks = []
 ) inherits datadog_agent::params {
 
   file { "${datadog_agent::params::conf_dir}/http_check.yaml":
