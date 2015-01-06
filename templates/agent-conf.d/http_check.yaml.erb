@@ -17,7 +17,7 @@ instances:
       <%= hash_opt -%>: <%= check[opt][hash_opt] %>
 <%       end -%>
 <%     elsif check[opt].class == Array -%>
-      <%= hash_opt -%>:
+    <%= opt -%>:
 <%       check[opt].sort.each do |arr_opt| -%>
       - <%= arr_opt %>
 <%       end -%>
