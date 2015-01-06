@@ -52,6 +52,7 @@
 # Sample Usage:
 #
 # class { 'datadog_agent::integrations::http_check':
+#   notify => ['user1@example.com','pagerduty'],
 #   http_checks => [ 
 #     {
 #       name                  => 'check1',
@@ -80,7 +81,8 @@
 #
 #
 class datadog_agent::integrations::http_check (
-  $http_checks = []
+  $http_checks = [],
+  $notify = []
 ) inherits datadog_agent::params {
 
   file { "${datadog_agent::params::conf_dir}/http_check.yaml":
