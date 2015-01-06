@@ -1,5 +1,11 @@
 init_config:
 
+<% if !@notify.empty? -%>
+notify:
+<%   @notify.each do |contact| -%>
+  - <%= contact %>
+<% end -%>
+
 instances:
 <% @http_checks.sort_by{|hsh| hsh['name']}.each do |check| -%>
   - name: <%= check['name'] %>
