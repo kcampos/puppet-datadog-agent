@@ -1,8 +1,8 @@
 init_config:
 
-<% if !@notify.empty? -%>
+<% if !@notifications.empty? -%>
 notify:
-<%   @notify.each do |contact| -%>
+<%   @notifications.each do |contact| -%>
   - <%= contact %>
 <%   end -%>
 <% end -%>
