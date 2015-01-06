@@ -7,8 +7,8 @@ class datadog_agent::add_integrations inherits datadog_agent::params {
 
   if has_key($integrations, 'http') {
     class { 'datadog_agent::integrations::http_check': 
-      http_checks => $integrations['http']['checks'],
-      notify      => $integrations['http']['notify']
+      http_checks   => $integrations['http']['checks'],
+      notifications => $integrations['http']['notifications']
     }
   }
 }
