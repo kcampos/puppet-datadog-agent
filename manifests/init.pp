@@ -55,7 +55,7 @@ class datadog_agent(
   $facts_to_tags = [],
   $puppet_run_reports = false,
   $puppetmaster_user = 'puppet',
-  $non_local_traffic = false,
+  $non_local_traffic = 'no',
   $log_level = 'info',
   $log_to_syslog = true,
   $service_ensure = 'running',
@@ -69,7 +69,7 @@ class datadog_agent(
   validate_array($facts_to_tags)
   validate_bool($puppet_run_reports)
   validate_string($puppetmaster_user)
-  validate_bool($non_local_traffic)
+  validate_string($non_local_traffic)
   validate_bool($log_to_syslog)
   validate_string($log_level)
 
