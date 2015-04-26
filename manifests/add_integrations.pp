@@ -11,4 +11,10 @@ class datadog_agent::add_integrations inherits datadog_agent::params {
       notifications => $integrations['http']['notifications']
     }
   }
+
+  if has_key($integrations, 'supervisor') {
+    class { 'datadog_agent::integrations::supervisor': 
+      instances => $integrations['supervisor']['instances']
+    }
+  }
 }
