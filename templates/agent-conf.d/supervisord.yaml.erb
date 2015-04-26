@@ -1,0 +1,47 @@
+#
+# MANAGED BY PUPPET
+#
+
+# instances:
+#   - name: server0    # Required. An arbitrary name to identify the supervisord server
+#     host: localhost  # Optional. Defaults to localhost. The host where supervisord server is running
+#     port: 9001       # Optional. Defaults to 9001. The port number.
+#     user: user       # Optional. Required only if a username is configured.
+#     pass: pass       # Optional. Required only if a password is configured.
+#     proc_names:      # Optional. The process to monitor within this supervisord instance.
+#      - apache2       #           If not specified, the check will monitor all processes.
+#      - webapp
+#      - java
+#     server_check: false    # Optional. Defaults to true. Service check for connection to supervisord server.
+#   - name: server1
+#     host: localhost
+#     port: 9002
+#   - name: server2
+#     socket: unix:///var/run//supervisor.sock
+#     host: http://127.0.0.1        # Optional. Defaults to http://127.0.0.1
+
+<%
+require 'yaml'
+if RUBY_VERSION < "1.9"
+# Hack to avoid ruby 1.8 always reordering the hashes and
+# changing this template resource at every run
+# See https://github.com/DataDog/puppet-datadog-agent/issues/43
+# Taken from http://www.dzone.com/snippets/generating-yaml-hashes-sorted
+class Hash
+  # Replacing the to_yaml function so it'll serialize hashes sorted (by their keys)
+  #
+  # Original function is in /usr/lib/ruby/1.8/yaml/rubytypes.rb
+  def to_yaml( opts = {} )
+    YAML::quick_emit( object_id, opts ) do |out|
+      out.map( taguri, to_yaml_style ) do |map|
+        sort.each do |k, v|   # <-- here's my addition (the 'sort')
+          map.add( k, v )
+        end
+      end
+    end
+  end
+end
+end
+%>
+
+<%= {'init_config'=>{'instances'=>@instances}}.to_yaml %>
