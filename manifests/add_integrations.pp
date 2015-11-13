@@ -17,4 +17,10 @@ class datadog_agent::add_integrations inherits datadog_agent::params {
       instances => $integrations['supervisor']['instances']
     }
   }
+
+  if has_key($integrations, 'docker') {
+    class { 'datadog_agent::integrations::docker':
+      tags => $integrations['docker']['tags']
+    }
+  }
 }
